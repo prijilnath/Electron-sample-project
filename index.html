@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Issue Resolution System</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="dashboard-hero">
+            <h5>Welcome User!</h5>
+        </div>
+        <div class="issue-container">
+            <header class="issue-header-title">
+                <h6><i class="fa fa-cog" aria-hidden="true"></i>
+                    Assigned</h6>
+                <hr>
+            </header>
+            <div class="row">
+                <div class="col-4"><span class="issue-count major"
+                        onclick="goToList('assigned', 'major')"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count minor"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count lower"><b>2</b></span></div>
+            </div>
+        </div>
+        <div class="issue-container">
+            <header class="issue-header-title">
+                <h6>Created</h6>
+                <hr>
+            </header>
+            <div class="row">
+                <div class="col-4"><span class="issue-count major"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count minor"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count lower"><b>2</b></span></div>
+            </div>
+        </div>
+        <div class="issue-container">
+            <header class="issue-header-title">
+                <h6>Following</h6>
+                <hr>
+            </header>
+            <div class="row">
+                <div class="col-4"><span class="issue-count major"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count minor"><b>3</b></span></div>
+                <div class="col-4"><span class="issue-count lower"><b>2</b></span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const electron = require('electron');
+        const BrowserWindow = electron.remote.BrowserWindow;
+        const url = require('url');
+        const path = require('path');
+        const { ipcRenderer } = electron;
+        const goToList = goToListFn;
+        function goToListFn(role, priority) {
+            let issuesListWindow = new BrowserWindow({
+                title: 'Issues List',
+                webPreferences: {
+                    nodeIntegration: true
+                }
+            });
+            //load html into window
+            issuesListWindow.loadURL(url.format({
+                pathname: path.join(__dirname, 'issues-list.html'),
+                protocol: 'file',
+                slashes: true
+            }));
+            //garbage collection handle
+            issuesListWindow.on('close', function () {
+                addItemWindow = null;
+            })
+            //send data to issuelist window
+            issuesListWindow.webContents.on('did-finish-load', () => {
+                issuesListWindow.webContents.send('setFilter', { role: role, priority: priority });
+            });
+        }
+    </script>
+</body>
+
+</html>

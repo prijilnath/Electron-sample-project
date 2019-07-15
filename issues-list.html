@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Issue Resolution System</title>
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <select class="form-control" id="role-fliter">
+                        <option>All Issues</option>
+                        <option>Assigned to Me</option>
+                        <option>Created by Me</option>
+                        <option>Following</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" id="formGroupSearchInput"
+                        placeholder="Enter Search Terms...">
+                </div>
+                <div class="form-group col-md-10">
+                    <div class="form-row">
+                        <div class="priority-filter">
+                            <span>6</span>
+                            <label>Critical</label>
+                        </div>
+                        <div class="priority-filter">
+                            <span>4</span>
+                            <label>Urgent</label>
+                        </div>
+                        <div class="priority-filter">
+                            <span>3</span>
+                            <label>Normal</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button class="issue-sort btn btn--bare" ng-click="toggle()">
+                        <i class="fa fa-lg fa-calendar"></i>
+                        <i class="fa fa-lg fa-long-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12">
+                <div class="issue-list-card">
+                    <header>
+                        <i class="fa fa-ship"></i>
+                        <h5>Issue #1</h5>
+                    </header>
+                    <div class="issue-list-container">
+                        <aside>
+                            <i class="fa fa-lg fa-exclamation-triangle"></i>
+                            <strong>Priority:</strong>
+                            <span class="priority-name">Urgent</span>
+                        </aside>
+                        <div class="issue-details">
+                            <div class="customer-name">
+                                <span><strong>Customer: </strong> MV7609 training</span>
+                            </div>
+                            <div class="details-box">
+                                <span><strong>Issue Type: </strong> </span>
+                                <span><strong>Issue #: </strong> 1449271242525</span>
+                            </div>
+                            <div class="details-box middle">
+                                <span><strong>My Role: </strong> Assigned</span>
+                                <span><strong>Assignee: </strong>FUNCTIONAL</span>
+                            </div>
+                            <div class="details-box">
+                                <span><strong>Updated: </strong> 1444348800000</span>
+                                <span class="status"><strong>Status: </strong> No Status</span>
+                            </div>
+                        </div>
+                        <div class="details-box-description">
+                            <span><strong>Description: </strong> Test comment</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-list-card">
+                        <header>
+                            <i class="fa fa-ship"></i>
+                            <h5>Issue #1</h5>
+                        </header>
+                        <div class="issue-list-container">
+                            <aside>
+                                <i class="fa fa-lg fa-exclamation-triangle"></i>
+                                <strong>Priority:</strong>
+                                <span class="priority-name">Urgent</span>
+                            </aside>
+                            <div class="issue-details">
+                                <div class="customer-name">
+                                    <span><strong>Customer: </strong> MV7609 training</span>
+                                </div>
+                                <div class="details-box">
+                                    <span><strong>Issue Type: </strong> </span>
+                                    <span><strong>Issue #: </strong> 1449271242525</span>
+                                </div>
+                                <div class="details-box middle">
+                                    <span><strong>My Role: </strong> Assigned</span>
+                                    <span><strong>Assignee: </strong>FUNCTIONAL</span>
+                                </div>
+                                <div class="details-box">
+                                    <span><strong>Updated: </strong> 1444348800000</span>
+                                    <span class="status"><strong>Status: </strong> No Status</span>
+                                </div>
+                            </div>
+                            <div class="details-box-description">
+                                <span><strong>Description: </strong> Test comment</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+        console.log('issues')
+        ipcRenderer.on('setFilter', function (event, filters) {
+            console.log(filters);
+        });
+    </script>
+</body>
+
+</html>
